@@ -4,8 +4,9 @@
 **Курс:** VibeCoder · Тема 9 — локальная CRM, Supabase, RLS  
 **Проект:** DesignStudio CRM — CRM для отдела продаж  
 **Папка:** `Projects/ДЗ-9/designstudio-crm/`  
+**GitHub:** https://github.com/treshkash323-alt/designstudio-crm  
 **Запуск:** локально http://localhost:3000 · Studio http://localhost:54323  
-**Дата:** 08.06.2026
+**Дата:** 08.06.2026 · **статус: готово к сдаче**
 
 ---
 
@@ -18,6 +19,7 @@
 3. Использует **RLS** (Row Level Security) в PostgreSQL: менеджер видит только лидов с `assigned_to = его ID`.
 4. Предоставляет веб-интерфейс на **Next.js 14**: вход, dashboard менеджера, admin-панель всех клиентов.
 5. Проверена на двух аккаунтах: **2 vs 5** лидов — разграничение доступа работает.
+6. Исходный код и документация выложены на **GitHub** (без секретов).
 
 Деплой в интернет **не выполнялся** — по заданию Lite достаточно локального запуска.
 
@@ -30,9 +32,7 @@
 | Папка trailcamp-crm | **designstudio-crm** (по Lite-заданию) |
 | TrailCamp, @trailcamp.ru | **DesignStudio**, @designstudio.ru |
 | /admin/leads | **/admin/clients** (то же по смыслу) |
-| Промпт Cursor Agent | Каркас собран в Cursor + миграция SQL |
-
-Обоснование: Lite-задание явно указывает `designstudio-crm` и почты `@designstudio.ru`; логика RLS и ролей — как на занятии.
+| Промпт Cursor Agent | Каркас в Cursor + SQL-миграция |
 
 ---
 
@@ -42,78 +42,88 @@ Docker Desktop · Supabase CLI · PostgreSQL 17 · RLS · Next.js 14 App Router 
 
 ---
 
-## 4. Скриншоты (вставить в этот документ)
+## 4. Безопасность (кратко)
+
+> Подробно: `SECURITY.md` в репозитории.
+
+| Проверка | Результат |
+|----------|-----------|
+| `.env.local` в git | **Нет** — только `.env.local.example` |
+| RLS на `leads`, `profiles` | **Да** — manager 2 / admin 5 подтверждено |
+| Middleware `/admin` | **Да** — manager редиректится |
+| `service_role` в браузере | **Нет** — `admin.ts` не подключён к UI |
+| Security Advisor | **0 errors**, 2 warnings (триггер `handle_new_user`) |
+| Доступ из интернета | **Нет** — localhost + 127.0.0.1 |
+
+**Вывод для ДЗ:** утечек секретов в GitHub нет; модель доступа работает. Это **учебный локальный** проект, не hardened production.
+
+---
+
+## 5. Скриншоты (вставить в этот документ)
 
 > Ключи в `.env.local` — да. На скринах **замазать** anon/service_role key.
 
 | № | Что снять | Подпись под рисунком |
 |---|-----------|----------------------|
-| **1** | Менеджер: `/dashboard`, 2 клиента, подпись RLS «(2)» | *Рис. 1. Менеджер — только назначенные лиды* |
-| **2** | Админ: `/admin/clients`, 5 клиентов, бейдж АДМИН | *Рис. 2. Админ — все лиды в системе* |
-| **3** | Docker Desktop → Containers `supabase_*_designstudio-crm` | *Рис. 3. Локальный Supabase в Docker* |
-| **4** | Studio → Table Editor → таблица `leads` (5 строк) | *Рис. 4. База данных leads* |
-| **5** | Терминал: `npm run dev`, Ready on localhost:3000 | *Рис. 5. Запуск Next.js* |
-| **6** | (опционально) Security Advisor — 0 errors | *Рис. 6. Проверка Advisor* |
+| **1** | Менеджер: `/dashboard`, 2 клиента, RLS «(2)» | *Рис. 1. Менеджер — только назначенные лиды* |
+| **2** | Админ: `/admin/clients`, 5 клиентов, АДМИН | *Рис. 2. Админ — все лиды* |
+| **3** | Docker → Containers `supabase_*_designstudio-crm` | *Рис. 3. Supabase в Docker* |
+| **4** | Studio → Table Editor → `leads` | *Рис. 4. База данных* |
+| **5** | Терминал `npm run dev` | *Рис. 5. Запуск Next.js* |
+| **6** | (опц.) Security Advisor — 0 errors | *Рис. 6. Advisor* |
 
-**Тестовые аккаунты:**
-
-- Менеджер: manager@designstudio.ru  
-- Админ: admin@designstudio.ru  
+**Тестовые аккаунты:** manager@designstudio.ru · admin@designstudio.ru
 
 ---
 
-## 5. Пошаговый сценарий проверки
-
-**Подготовка:**
+## 6. Пошаговый сценарий проверки
 
 ```powershell
-# Docker Desktop — Engine running
 cd Projects\ДЗ-9\designstudio-crm
 npx supabase start
 npm run dev
 ```
 
-**Проверка (выполнено):**
-
-1. Зарегистрировать manager@designstudio.ru и admin@designstudio.ru на `/login`.
-2. В Studio → SQL Editor выполнить `supabase/seed_after_signup.sql`.
-3. Admin — **выйти и войти снова** (обновление JWT с role admin).
-4. Менеджер → http://localhost:3000/dashboard → **2 лида**.
-5. Админ → http://localhost:3000/admin/clients → **5 лидов**.
-6. Менеджер → попытка открыть `/admin/clients` → редирект на `/dashboard`.
+1. Регистрация manager@ и admin@designstudio.ru на `/login`.
+2. SQL Editor → `supabase/seed_after_signup.sql` → Run.
+3. Admin: выход / вход → `/admin/clients` → **5 лидов**.
+4. Manager: `/dashboard` → **2 лида**.
+5. Manager → `/admin/clients` → редирект на `/dashboard`.
 
 ---
 
-## 6. Результат
+## 7. Результат
 
-- [x] Supabase локально (`npx supabase start`, Studio :54323)
-- [x] Таблицы profiles, leads + RLS-политики
-- [x] Два пользователя зарегистрированы
-- [x] Admin назначен (profiles + app_metadata)
-- [x] 2 лида привязаны менеджеру (`assigned_to`)
-- [x] Менеджер видит только своих (2)
-- [x] Админ видит всех (5)
-- [x] Next.js приложение с middleware
-- [ ] Скрины 1–5 вставлены в документ для сдачи
+- [x] Supabase локально, RLS, middleware
+- [x] Admin (profiles + app_metadata), 2 лида менеджеру
+- [x] Проверка 2 vs 5 лидов
+- [x] GitHub без секретов
+- [x] SECURITY.md, TODO_ROADMAP.md, отчёт/ПЗ
+- [ ] Скрины 1–5 в Word для загрузки в школу
 
 ---
 
-## 7. Ссылки
+## 8. Ссылки
 
 | Ресурс | URL |
 |--------|-----|
-| **GitHub** | https://github.com/treshkash323-alt/designstudio-crm |
+| **GitHub (код)** | https://github.com/treshkash323-alt/designstudio-crm |
 | CRM (локально) | http://localhost:3000 |
 | Supabase Studio | http://localhost:54323 |
-| Supabase API | http://127.0.0.1:54321 |
 
-Проект на диске: `C:\Users\kash-\Python_kash\Cursor\Projects\ДЗ-9\designstudio-crm\`
+**Документы в репо:** `DZ-9_отчёт_для_сдачи.docx` · `DZ-9_РУКОВОДСТВО_И_ПЗ.docx` · `SECURITY.md`
 
 ---
 
-## 8. Комментарий для преподавателя
+## 9. Комментарий для преподавателя
 
-Задание Lite выполнено локально: Docker + Supabase CLI + Next.js. Разграничение доступа реализовано через RLS на уровне PostgreSQL и middleware на уровне маршрутов. SQL для назначения admin и привязки лидов — `seed_after_signup.sql` (Studio SQL Editor). Подробное руководство с глоссарием — `DZ-9_РУКОВОДСТВО_И_ПЗ.docx`. Security Advisor: 0 errors, 2 warnings на триггер `handle_new_user()` — типично для локальной разработки.
+Lite выполнено локально: Docker + Supabase + Next.js, RLS + middleware. GitHub — публичный репозиторий без `.env.local`. Проведён аудит безопасности (SECURITY.md). Advisor: 0 errors. План развития — образовательная ветка (admin/student/teacher) и интеграция с Tilda — в TODO_ROADMAP.md, после сдачи.
+
+---
+
+## 10. Развитие после ДЗ (не входит в Lite)
+
+См. `TODO_ROADMAP.md`: EDU-платформа AIKIVAVIORA, роли пользователей, Tilda — отдельный трек.
 
 ---
 
