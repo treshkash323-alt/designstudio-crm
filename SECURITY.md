@@ -67,7 +67,7 @@ profiles: admin → SELECT all
 - [x] Middleware блокирует `/admin` для manager
 - [x] GitHub: код без секретов
 - [x] Security Advisor: **0 errors** (2 warnings — см. 3.2)
-- [ ] Скрины в `DZ-9_отчёт_для_сдачи.docx`
+- [x] Скрины 1–6 в `DZ-9_отчёт_для_сдачи.docx` (без ключей из `supabase status`)
 
 ### Перед любым выкладом в интернет (будущее)
 

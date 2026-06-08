@@ -187,7 +187,7 @@ def build_report() -> Path:
             ("GitHub:", "https://github.com/treshkash323-alt/designstudio-crm"),
             ("Папка:", "Projects/ДЗ-9/designstudio-crm/"),
             ("Запуск:", "localhost:3000 · Studio :54323"),
-            ("Дата:", "08.06.2026 · готово к сдаче"),
+            ("Дата:", "08.06.2026 · отчёт со скринами готов"),
         ],
     )
 
@@ -239,22 +239,21 @@ def build_report() -> Path:
         "Учебный локальный проект, не hardened production. Подробно: SECURITY.md."
     )
 
-    doc.add_heading("5. Скриншоты (вставить в документ)", level=1)
+    doc.add_heading("5. Скриншоты", level=1)
     add_table(
         doc,
-        ["№", "Что снять", "Подпись"],
+        ["№", "Что снято", "Статус"],
         [
-            ("1", "Менеджер /dashboard — 2 клиента, RLS (2)", "Рис. 1. Менеджер"),
-            ("2", "Админ /admin/clients — 5 клиентов, АДМИН", "Рис. 2. Админ"),
-            ("3", "Docker — контейнеры designstudio-crm", "Рис. 3. Docker"),
-            ("4", "Studio — таблица leads", "Рис. 4. База"),
-            ("5", "Терминал npm run dev", "Рис. 5. Запуск"),
-            ("6", "(опц.) Security Advisor — 0 errors", "Рис. 6. Advisor"),
+            ("1", "Менеджер /dashboard — 2 клиента, RLS (2)", "✅"),
+            ("2", "Админ /admin/clients — 5 клиентов, АДМИН", "✅"),
+            ("3", "Docker — контейнеры designstudio-crm", "✅"),
+            ("4", "Studio — таблица leads", "✅"),
+            ("5", "VS Code Terminal npm run dev, port 3000", "✅"),
+            ("6", "Security Advisor — 0 errors", "✅"),
         ],
     )
     doc.add_paragraph(
-        "Тестовые аккаунты: manager@designstudio.ru · admin@designstudio.ru. "
-        "На скринах замазать anon/service keys."
+        "В docx вставлены 7 рисунков (login + 6). Не включать supabase status с ключами."
     )
 
     doc.add_heading("6. Сценарий проверки", level=1)
@@ -280,7 +279,8 @@ def build_report() -> Path:
             ("Проверка 2 vs 5 лидов", "✅"),
             ("GitHub без секретов", "✅"),
             ("SECURITY.md, TODO_ROADMAP.md", "✅"),
-            ("Скрины 1–5 в Word", "☐ вручную"),
+            ("Скрины 1–6 в Word", "✅"),
+            ("Загрузка в LMS школы", "☐"),
         ],
     )
 

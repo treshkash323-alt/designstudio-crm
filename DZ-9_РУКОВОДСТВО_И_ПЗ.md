@@ -6,7 +6,7 @@
 **Папка:** `C:\Users\kash-\Python_kash\Cursor\Projects\ДЗ-9\designstudio-crm\`  
 **GitHub:** https://github.com/treshkash323-alt/designstudio-crm  
 **Дата:** 08.06.2026  
-**Статус:** ДЗ готово к сдаче (менеджер — 2 лида, admin — 5; код на GitHub)
+**Статус:** ДЗ-9 закрыто · отчёт со скринами в Word · код на GitHub
 
 > Этот файл — и **отчёт/ПЗ для сдачи**, и **учебное руководство**. Читайте по порядку; разделы с пометкой «Учиться» можно вернуться позже.
 
@@ -472,15 +472,15 @@ const { data: leads } = await supabase.from('leads').select('*');
 
 ### 13.1. Обязательные скрины
 
-- [ ] **Менеджер:** `/dashboard`, 2 клиента, подпись RLS «(2)»
-- [ ] **Админ:** `/admin/clients`, 5 строк, бейдж АДМИН
+- [x] **Менеджер:** `/dashboard`, 2 клиента, подпись RLS «(2)»
+- [x] **Админ:** `/admin/clients`, 5 строк, бейдж АДМИН
 
 ### 13.2. Желательно (для отчёта)
 
-- [ ] Docker Containers — контейнеры `designstudio-crm`
-- [ ] Studio → Table Editor → `leads` (5 записей)
-- [ ] Security Advisor — 0 errors (2 warnings — можно упомянуть в тексте)
-- [ ] Терминал `npm run dev` — localhost:3000
+- [x] Docker Containers — контейнеры `designstudio-crm`
+- [x] Studio → Table Editor → `leads` (5 записей)
+- [x] Security Advisor — 0 errors (2 warnings — упомянуто в тексте)
+- [x] VS Code Terminal — `npm run dev`, `localhost:3000`
 
 ### 13.3. Безопасность (перед сдачей)
 
@@ -489,7 +489,7 @@ const { data: leads } = await supabase.from('leads').select('*');
 - [x] Middleware — manager не попадает на `/admin/clients`
 - [x] `service_role` не в client components
 - [x] GitHub без секретов — только `.env.local.example`
-- [ ] На скринах **замазать** anon/service keys (если видны)
+- [x] На скринах нет anon/service keys (`supabase status` не в отчёт)
 
 ### 13.4. Документы
 
@@ -504,6 +504,13 @@ const { data: leads } = await supabase.from('leads').select('*');
 ### 13.5. GitHub
 
 **https://github.com/treshkash323-alt/designstudio-crm** — код без `.env.local`. Для преподавателя: репозиторий + локальный запуск по `СТАРТ.md`.
+
+### 13.6. Терминал (типичные ошибки)
+
+- **Один** VS Code Terminal — `npm run dev`; порт из `Local:` = порт в браузере.
+- `Port 3000 is in use` → лишний `npm run dev` в другом окне; `Ctrl+C` везде, один перезапуск.
+- `designstudio-crm` в PowerShell — **не команда**, это имя папки.
+- 404 на `:3000` при сервере на `:3001` — открыть тот же порт, что в терминале.
 
 ---
 

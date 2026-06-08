@@ -6,7 +6,7 @@
 **Папка:** `Projects/ДЗ-9/designstudio-crm/`  
 **GitHub:** https://github.com/treshkash323-alt/designstudio-crm  
 **Запуск:** локально http://localhost:3000 · Studio http://localhost:54323  
-**Дата:** 08.06.2026 · **статус: готово к сдаче**
+**Дата:** 08.06.2026 · **статус: отчёт со скринами готов, можно загружать в школу**
 
 ---
 
@@ -59,18 +59,19 @@ Docker Desktop · Supabase CLI · PostgreSQL 17 · RLS · Next.js 14 App Router 
 
 ---
 
-## 5. Скриншоты (вставить в этот документ)
+## 5. Скриншоты
 
-> Ключи в `.env.local` — да. На скринах **замазать** anon/service_role key.
+> В `DZ-9_отчёт_для_сдачи.docx` вставлены **7 рисунков** (логин + 6 по таблице).  
+> Скрин `npx supabase status` с ключами **не включать** в отчёт.
 
-| № | Что снять | Подпись под рисунком |
-|---|-----------|----------------------|
-| **1** | Менеджер: `/dashboard`, 2 клиента, RLS «(2)» | *Рис. 1. Менеджер — только назначенные лиды* |
-| **2** | Админ: `/admin/clients`, 5 клиентов, АДМИН | *Рис. 2. Админ — все лиды* |
-| **3** | Docker → Containers `supabase_*_designstudio-crm` | *Рис. 3. Supabase в Docker* |
-| **4** | Studio → Table Editor → `leads` | *Рис. 4. База данных* |
-| **5** | Терминал `npm run dev` | *Рис. 5. Запуск Next.js* |
-| **6** | (опц.) Security Advisor — 0 errors | *Рис. 6. Advisor* |
+| № | Что снято | Подпись | Статус |
+|---|-----------|---------|--------|
+| **1** | Менеджер: `/dashboard`, 2 клиента, RLS «(2)» | *Рис. 1. Менеджер — только назначенные лиды* | ✅ |
+| **2** | Админ: `/admin/clients`, 5 клиентов, АДМИН | *Рис. 2. Админ — все лиды* | ✅ |
+| **3** | Docker → Containers `designstudio-crm` | *Рис. 3. Supabase в Docker* | ✅ |
+| **4** | Studio → Table Editor → `leads` | *Рис. 4. База данных* | ✅ |
+| **5** | VS Code Terminal: `npm run dev`, `localhost:3000` | *Рис. 5. Запуск Next.js* | ✅ |
+| **6** | Security Advisor — 0 errors | *Рис. 6. Advisor* | ✅ |
 
 **Тестовые аккаунты:** manager@designstudio.ru · admin@designstudio.ru
 
@@ -99,7 +100,8 @@ npm run dev
 - [x] Проверка 2 vs 5 лидов
 - [x] GitHub без секретов
 - [x] SECURITY.md, TODO_ROADMAP.md, отчёт/ПЗ
-- [ ] Скрины 1–5 в Word для загрузки в школу
+- [x] Скрины 1–6 (+ login) в `DZ-9_отчёт_для_сдачи.docx`
+- [ ] Загрузка Word в LMS школы
 
 ---
 
